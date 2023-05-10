@@ -1,0 +1,19 @@
+#!/bin/sh               
+#SBATCH --ntasks=1
+#SBATCH --time=48:00:00
+#SBATCH -o / #STDOUT
+#SBATCH --cpus-per-task=2        
+#SBATCH --mail-type=END,FAIL    # Mail events (NONE, BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=ladmon@stanford.edu
+#SBATCH --array=1-100         # Array range
+
+mkdir /scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}
+mkdir /scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/terminal
+python3 ising_simulation.py --fname "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}"  -n 100 -N 100 -R 1000 -J -1 -p 0.05 --Sx 10 --Sy 10 \
+> "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/terminal/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}_terminal.out"
+
+echo "----------------------------------"
+echo "id:" "$SLURM_ARRAY_JOB_ID" "$SLURM_ARRAY_TASK_ID"
+echo "cpu per task" "$SLURM_CPUS_PER_TASK"
+echo "nodelist" "$SLURM_JOB_NODELIST"
+echo "cluster name:" "$SLURM_CLUSTER_NAME"

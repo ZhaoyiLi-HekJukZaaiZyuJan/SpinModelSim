@@ -1,0 +1,5 @@
+----------------------------------
+id: 46711150 25
+cpu per task 2
+nodelist sh03-01n32
+cluster name: sherlock
