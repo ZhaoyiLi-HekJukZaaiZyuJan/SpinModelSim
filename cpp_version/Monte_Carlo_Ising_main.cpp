@@ -86,9 +86,8 @@ struct lattice {
             }
         }
 
-        void make_step() {
-            random_device rd;
-            mt19937 rng(rd());
+        void make_step(mt19937& rng) {
+            
             uniform_int_distribution<int> distribution(0, S[0] - 1);
 
             int x = distribution(rng);
@@ -101,30 +100,33 @@ struct lattice {
             d_energy += bonds[1][x][(y - 1 + S[1]) % S[1]] * spins[x][y] * spins[x][(y - 1 + S[1]) % S[1]];
             d_energy *= -2;
 
-            if (d_energy <= 0) {
+            double r = generate_canonical<double, 10>(rng);
+            if (r < exp(-d_energy / T)) {
                 spins[x][y] *= -1;
                 energy += d_energy;
-            } else {
-                double r = generate_canonical<double, 10>(rng);
-                if (r < exp(-d_energy / T)) {
-                    spins[x][y] *= -1;
-                    energy += d_energy;
-                }
             }
-        } 
-
-        void make_sweep(int nsteps) {
+        }
+        void make_sweep(int nsteps, mt19937& rng) {
             for(int i=0; i <  nsteps; i++){
-                this->make_step();
+                this->make_step(rng);
             }
         }
 };
 
 void simulate(const int S[2], const double T, const double J, const int waitSweeps, const int rptSweeps, const bool out, const bool track_state, const string fname){
-    ofstream outfile;
+    random_device rd;
+    mt19937 rng(rd());
+    ofstream outfile_m;
+    ofstream outfile_e;
+    ofstream outfile_s;
+
 	if(out != 0){
-		outfile.open(fname);
-		outfile << "state,energy,magnetization\n";
+		outfile_m.open(fname +"_m.out");
+        outfile_e.open(fname +"_e.out");
+        outfile_s.open(fname +"_s.out");
+		outfile_m << T << "," << flush;
+        outfile_e << T << "," << flush;
+        outfile_s << T << "," << flush;
 	}
     lattice testlattice(S, T, J);
     testlattice.random_initial_condition();
@@ -133,7 +135,7 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
 
     // Wait for waitSweeps
     for (int i = 0; i < waitSweeps; i++) {
-        testlattice.make_sweep(S[0]*S[1]);
+        testlattice.make_sweep(S[0]*S[1], rng);
     }
 
     // Repeat for rptSweeps and sample for each sweep
@@ -143,7 +145,7 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
             cout << ".";
             cout.flush();
         }
-        testlattice.make_sweep(S[0]*S[1]);
+        testlattice.make_sweep(S[0]*S[1], rng);
 
         // Recording state, energy, and magnetization
         energy = testlattice.energy;
@@ -153,20 +155,27 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
                 magnetization += testlattice.spins[j][k];
             }
         }
-        // if (track_state){
-        //       state = testlattice.get_state_number();
-        // }
-        
-        outfile << state << "," << energy << "," << magnetization << "\n";
+        if (track_state){
+              state = testlattice.get_state_number();
+        }
+        if(out != 0){
+            outfile_m << magnetization << "," << flush;
+            outfile_e << energy << ","  << flush;
+            outfile_s << state << "," << flush;
+        }
     }
-
+    if(out != 0){
+        outfile_m << endl;
+        outfile_e << endl;
+        outfile_s << endl;
+    }
 }
 
 int main(int argc, const char *argv[]) {
     start_t = clock();
     string fname;
-    int n, waitSweep, rptSweep;
-    double T, J;
+    int n, waitSweep, rptSweep, nt;
+    double tmin, tmax, J;
     bool out, track_state;
 
     cxxopts::Options options(*argv,
@@ -180,16 +189,32 @@ int main(int argc, const char *argv[]) {
     ("waitSweep", "number of sweeps to wit before sampling", cxxopts::value(waitSweep)->default_value("10"))
     ("rptSweep", "number of sweeps sampled", cxxopts::value(rptSweep)->default_value("10000"))
 	("J", "interaction strength", cxxopts::value(J)->default_value("-1"))
-    ("T", "temperature", cxxopts::value(T)->default_value("1"))
+    ("tmin", "temperature", cxxopts::value(tmin)->default_value("0.1"))
+    ("tmax", "temperature", cxxopts::value(tmax)->default_value("2.1"))
+    ("nt", "temperature", cxxopts::value(nt)->default_value("10"))
 	("n", "size of lattice", cxxopts::value(n)->default_value("3"));
     options.parse(argc, argv);
 
+    //outputing options
+	cout << "tmin:" << tmin << ";tmax:" << tmax << endl;
+	cout << "n:" << n << endl;
+    cout << "waitSweep:" << waitSweep << "rptSweep:" << rptSweep <<  endl;
+
+    int binst = 0 == nt ? 1: nt;
     fname = "";
     if (fname == "") {
-		fname = "n=" + to_string(n) + ",T=" + to_string(T).substr(0,3) + ",J=" +to_string(J).substr(0,4) + ",rptSweep=" + to_string(rptSweep) + ".out";
+		fname = "../data/n=" + to_string(n) + ",T=(" + to_string(tmin).substr(0,3)+ to_string(tmax).substr(0,3) + "),J=" +to_string(J).substr(0,4) + ",rptSweep=" + to_string(rptSweep);
 	}
     int S[2] = {n,n};
-    simulate(S, T, J, waitSweep, rptSweep, out, track_state,  fname);
+    
+	for (int j = 0; j <= nt; j++) {
+        double t = tmin + (tmax-tmin)/binst * j;
+        simulate(S, t, J, waitSweep, rptSweep, out, track_state,  fname);
+     }   
+
     cout << "t(Generation):"<< double(clock()-start_t)/CLOCKS_PER_SEC << endl;//timing
     return 0;
 }
+
+//simple testing commands
+//./simulate -n 3 --out --tmin 1 --tmax 1 --nt 1

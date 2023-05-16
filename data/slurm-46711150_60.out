@@ -1,7 +1,0 @@
-mkdir: cannot create directory ‘/scratch/users/ladmon/46711150’: File exists
-mkdir: cannot create directory ‘/scratch/users/ladmon/46711150/terminal’: File exists
-----------------------------------
-id: 46711150 60
-cpu per task 2
-nodelist sh02-10n48
-cluster name: sherlock
