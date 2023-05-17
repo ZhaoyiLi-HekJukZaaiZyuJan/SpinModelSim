@@ -121,9 +121,9 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
     ofstream outfile_s;
 
 	if(out != 0){
-		outfile_m.open(fname +"_m.out");
-        outfile_e.open(fname +"_e.out");
-        outfile_s.open(fname +"_s.out");
+		outfile_m.open(fname +"_m.out", fstream::app);
+        outfile_e.open(fname +"_e.out", fstream::app);
+        outfile_s.open(fname +"_s.out", fstream::app);
 		outfile_m << T << "," << flush;
         outfile_e << T << "," << flush;
         outfile_s << T << "," << flush;
@@ -169,6 +169,9 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
         outfile_e << endl;
         outfile_s << endl;
     }
+    outfile_m.close();
+    outfile_s.close();
+    outfile_e.close();
 }
 
 int main(int argc, const char *argv[]) {
@@ -198,12 +201,12 @@ int main(int argc, const char *argv[]) {
     //outputing options
 	cout << "tmin:" << tmin << ";tmax:" << tmax << endl;
 	cout << "n:" << n << endl;
-    cout << "waitSweep:" << waitSweep << "rptSweep:" << rptSweep <<  endl;
+    cout << "waitSweep:" << waitSweep << ", rptSweep:" << rptSweep <<  endl;
 
     int binst = 0 == nt ? 1: nt;
     fname = "";
     if (fname == "") {
-		fname = "../data/n=" + to_string(n) + ",T=(" + to_string(tmin).substr(0,3)+ to_string(tmax).substr(0,3) + "),J=" +to_string(J).substr(0,4) + ",rptSweep=" + to_string(rptSweep);
+		fname = "../data/n=" + to_string(n) + ",T=(" + to_string(tmin).substr(0,3)+ "," +to_string(tmax).substr(0,3) + "),J=" +to_string(J).substr(0,4) + ",rptSweep=" + to_string(rptSweep);
 	}
     int S[2] = {n,n};
     
