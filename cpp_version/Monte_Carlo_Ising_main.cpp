@@ -106,6 +106,7 @@ struct lattice {
                 energy += d_energy;
             }
         }
+        
         void make_sweep(int nsteps, mt19937& rng) {
             for(int i=0; i <  nsteps; i++){
                 this->make_step(rng);
@@ -192,7 +193,7 @@ int main(int argc, const char *argv[]) {
     ("waitSweep", "number of sweeps to wit before sampling", cxxopts::value(waitSweep)->default_value("10"))
     ("rptSweep", "number of sweeps sampled", cxxopts::value(rptSweep)->default_value("10000"))
 	("J", "interaction strength", cxxopts::value(J)->default_value("-1"))
-    ("tmin", "temperature", cxxopts::value(tmin)->default_value("0.1"))
+    ("tmin", "temperature", cxxopts::value(tmin)->default_value("0.1"))`
     ("tmax", "temperature", cxxopts::value(tmax)->default_value("2.1"))
     ("nt", "temperature", cxxopts::value(nt)->default_value("10"))
 	("n", "size of lattice", cxxopts::value(n)->default_value("3"));
@@ -220,4 +221,4 @@ int main(int argc, const char *argv[]) {
 }
 
 //simple testing commands
-//./simulate -n 3 --out --tmin 1 --tmax 1 --nt 1
+//./simulate -n 20 --out --tmin 0.1./simulate -n 20 --out --tmin 0.1 --tmax 3.1 --nt 10
