@@ -14,11 +14,10 @@ mkdir /scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/terminal_output
 # > "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/terminal/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}_terminal.out"
 
 ./cpp_version/simulate --fname "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}"  -n 200 --out --tmin 2.2 --tmax 2.5 --nt 1 --rptSweep 1000
-> "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/terminal/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}_terminal.out"
+> "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/terminal_output/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}_terminal.out"
 
 echo "----------------------------------"
 echo "id:" "$SLURM_ARRAY_JOB_ID" "$SLURM_ARRAY_TASK_ID"
 echo "cpu per task" "$SLURM_CPUS_PER_TASK"
 echo "nodelist" "$SLURM_JOB_NODELIST"
 echo "cluster name:" "$SLURM_CLUSTER_NAME"
-``
