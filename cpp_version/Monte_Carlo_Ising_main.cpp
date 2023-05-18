@@ -209,6 +209,7 @@ int main(int argc, const char *argv[]) {
     if (fname == "") {
 		fname = "../data/n=" + to_string(n) + ",T=(" + to_string(tmin).substr(0,3)+ "," +to_string(tmax).substr(0,3) + "),J=" +to_string(J).substr(0,4) + ",rptSweep=" + to_string(rptSweep);
 	}
+    cout << "fname:" << fname << endl;
     int S[2] = {n,n};
     
 	for (int j = 0; j <= nt; j++) {
