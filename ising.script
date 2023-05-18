@@ -1,11 +1,11 @@
 #!/bin/sh               
 #SBATCH --ntasks=1
 #SBATCH --time=48:00:00
-#SBATCH -o / #STDOUT
+#SBATCH -o /scratch/users/ladmon/ML3D/results/%A_%a_terminal.out  #STDOUT
 #SBATCH --cpus-per-task=2        
 #SBATCH --mail-type=END,FAIL    # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=ladmon@stanford.edu
-#SBATCH --array=1-100         # Array range
+#SBATCH --array=1-1             # Array range
 
 mkdir /scratch/users/ladmon/test
 mkdir /scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}
