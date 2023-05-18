@@ -205,7 +205,7 @@ int main(int argc, const char *argv[]) {
     cout << "waitSweep:" << waitSweep << ", rptSweep:" << rptSweep <<  endl;
 
     int binst = 0 == nt ? 1: nt;
-    fname = "";
+
     if (fname == "") {
 		fname = "../data/n=" + to_string(n) + ",T=(" + to_string(tmin).substr(0,3)+ "," +to_string(tmax).substr(0,3) + "),J=" +to_string(J).substr(0,4) + ",rptSweep=" + to_string(rptSweep);
 	}
