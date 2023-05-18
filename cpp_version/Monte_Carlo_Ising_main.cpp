@@ -120,6 +120,8 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
     ofstream outfile_m;
     ofstream outfile_e;
     ofstream outfile_s;
+    int sum_e = 0, sum_e2 = 0, sum_m = 0, sum_m2 = 0;
+
 
 	if(out != 0){
 		outfile_m.open(fname +"_m.out", fstream::app);
@@ -154,11 +156,16 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
         for (int j = 0; j < S[0]; j++) {
             for (int k = 0; k < S[1]; k++) {
                 magnetization += testlattice.spins[j][k];
-            }
+            }  
         }
         if (track_state){
               state = testlattice.get_state_number();
         }
+        sum_e += energy;
+        sum_e2 += energy*energy;
+        sum_m += magnetization;
+        sum_m2 += magnetization*magnetization;
+
         if(out != 0){
             outfile_m << magnetization << "," << flush;
             outfile_e << energy << ","  << flush;
@@ -166,8 +173,8 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
         }
     }
     if(out != 0){
-        outfile_m << endl;
-        outfile_e << endl;
+        outfile_m << sum_m << "," << sum_m2 << endl;
+        outfile_e << sum_e << "," << sum_e2 << endl;
         outfile_s << endl;
     }
     outfile_m.close();
