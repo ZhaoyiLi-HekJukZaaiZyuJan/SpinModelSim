@@ -120,17 +120,28 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
     ofstream outfile_m;
     ofstream outfile_e;
     ofstream outfile_s;
+    ofstream outfile_stats_m;
+    ofstream outfile_stats_e;
+
     int sum_e = 0, sum_e2 = 0, sum_m = 0, sum_m2 = 0;
 
 
 	if(out != 0){
 		outfile_m.open(fname +"_m.out", fstream::app);
         outfile_e.open(fname +"_e.out", fstream::app);
-        outfile_s.open(fname +"_s.out", fstream::app);
-		outfile_m << T << "," << flush;
+        outfile_stats_m.open(fname +"_stats_m.out", fstream::app);
+        outfile_stats_e.open(fname +"_stats_e.out", fstream::app);
+		
+        outfile_m << T << "," << flush;
         outfile_e << T << "," << flush;
-        outfile_s << T << "," << flush;
+        outfile_stats_m << T << "," << flush;
+        outfile_stats_e << T << "," << flush;
+        if(track_state != 0){
+             outfile_s.open(fname +"_s.out", fstream::app);
+             outfile_s << T << "," << flush;
+        }
 	}
+    
     lattice testlattice(S, T, J);
     testlattice.random_initial_condition();
     testlattice.energy = testlattice.update_energy();
@@ -169,13 +180,19 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
         if(out != 0){
             outfile_m << magnetization << "," << flush;
             outfile_e << energy << ","  << flush;
-            outfile_s << state << "," << flush;
+            if(track_state != 0){
+                outfile_s << state << "," << flush;
+            }
         }
     }
     if(out != 0){
-        outfile_m << sum_m << "," << sum_m2 << endl;
-        outfile_e << sum_e << "," << sum_e2 << endl;
-        outfile_s << endl;
+        outfile_m << endl;
+        outfile_e << endl;
+        if(track_state != 0){
+            outfile_s << endl;
+        }
+        outfile_stats_m << sum_m << "," << sum_m2 << endl;
+        outfile_stats_e << sum_e << "," << sum_e2 << endl;
     }
     outfile_m.close();
     outfile_s.close();
