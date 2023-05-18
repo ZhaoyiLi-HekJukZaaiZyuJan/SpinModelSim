@@ -193,7 +193,7 @@ int main(int argc, const char *argv[]) {
     ("waitSweep", "number of sweeps to wit before sampling", cxxopts::value(waitSweep)->default_value("10"))
     ("rptSweep", "number of sweeps sampled", cxxopts::value(rptSweep)->default_value("10000"))
 	("J", "interaction strength", cxxopts::value(J)->default_value("-1"))
-    ("tmin", "temperature", cxxopts::value(tmin)->default_value("0.1"))`
+    ("tmin", "temperature", cxxopts::value(tmin)->default_value("0.1"))
     ("tmax", "temperature", cxxopts::value(tmax)->default_value("2.1"))
     ("nt", "temperature", cxxopts::value(nt)->default_value("10"))
 	("n", "size of lattice", cxxopts::value(n)->default_value("3"));
