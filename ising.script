@@ -13,7 +13,7 @@ mkdir /scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/terminal_output
 # python3 ising_simulation.py --fname "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}"  -n 100 -N 100 -R 1000 -J -1 -p 0.05 --Sx 10 --Sy 10 \
 # > "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/terminal/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}_terminal.out"
 
-./cpp_version/simulate --fname "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}"  -n 100 --out --tmin 2.2 --tmax 2.5 --nt 30 --rptSweep 1000000
+./cpp_version/simulate --fname "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}"  -n 50 --out --tmin 2.2 --tmax 2.5 --nt 30 --rptSweep 1000000
 
 echo "----------------------------------"
 echo "id:" "$SLURM_ARRAY_JOB_ID" "$SLURM_ARRAY_TASK_ID"
