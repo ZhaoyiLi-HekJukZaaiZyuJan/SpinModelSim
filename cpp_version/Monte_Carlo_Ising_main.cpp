@@ -123,7 +123,8 @@ void simulate(const int S[2], const double T, const double J, const int waitSwee
     ofstream outfile_stats_m;
     ofstream outfile_stats_e;
 
-    int sum_e = 0, sum_e2 = 0, sum_m = 0, sum_m2 = 0;
+    long long int sum_e = 0, sum_m = 0;
+    unsigned long long int sum_e2 = 0, sum_m2 = 0;
 
 
 	if(out != 0){
