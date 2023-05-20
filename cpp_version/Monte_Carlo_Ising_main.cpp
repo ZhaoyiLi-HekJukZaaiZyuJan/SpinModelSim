@@ -242,7 +242,7 @@ int main(int argc, const char *argv[]) {
         simulate(S, t, J, waitSweep, rptSweep, out, track_state,  fname);
      }   
 
-    cout << "t(Generation):"<< double(clock()-start_t)/CLOCKS_PER_SEC << endl;//timing
+    cout << "t(Generation):"<< double(clock()-start_t)/CLOCKS_PER_SEC << endl; //timing
     return 0;
 }
 
