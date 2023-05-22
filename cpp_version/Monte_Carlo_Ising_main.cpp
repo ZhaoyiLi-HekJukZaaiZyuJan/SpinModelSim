@@ -3,6 +3,8 @@
 #include <cmath>
 #include <fstream>
 #include <random>
+#include <gmp.h>
+#include <stdio.h>
 
 #include <cxxopts/cxxopts.hpp>
 
@@ -206,6 +208,16 @@ int main(int argc, const char *argv[]) {
     int n, waitSweep, rptSweep, nt;
     double tmin, tmax, J;
     bool out, track_state;
+
+    //test
+    cout << "test" << endl;
+    int test_int = 1000;
+    cout << test_int << endl;
+    mpz_t long_int;
+    mpz_set_si(long_int,test_int);
+    mpz_pow_ui(long_int, long_int,10) ;
+    cout << long_int << endl;
+
 
     cxxopts::Options options(*argv,
 							 "Simulator for 2D ising model"
