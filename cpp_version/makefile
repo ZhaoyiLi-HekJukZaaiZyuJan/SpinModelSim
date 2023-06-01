@@ -2,7 +2,10 @@ DIRS := . ../src
 SOURCES := $(foreach dir, $(DIRS), $(wildcard $(dir)/*.cpp))
 OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
 
-CFLAGS := -std=c++17 -no-pie -lgmp -lgmpxx -fmax-errors=5 -O3\
+# CFLAGS := -std=c++17 -no-pie -lgmp -lgmpxx -fmax-errors=5 -O3\
+# 	-I ../src \
+# 	-I ../src/libs/
+CFLAGS := -std=c++17 -no-pie -fmax-errors=5 -O3\
 	-I ../src \
 	-I ../src/libs/
 CXX ?= g++
