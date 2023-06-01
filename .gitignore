@@ -1,4 +1,6 @@
 .DS_Store
 *.out
+*.o
 *.csv
 src/libs/gmp-6.2.1
+simulate
