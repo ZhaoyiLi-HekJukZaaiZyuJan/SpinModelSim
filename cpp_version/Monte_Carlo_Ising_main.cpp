@@ -3,7 +3,7 @@
 #include <cmath>
 #include <fstream>
 #include <random>
-#include <gmp.h>
+// #include <gmp.h>
 #include <stdio.h>
 
 #include <cxxopts/cxxopts.hpp>
