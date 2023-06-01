@@ -7,6 +7,7 @@
 #SBATCH --mail-user=ladmon@stanford.edu
 #SBATCH --array=1-100             # Array range
 
+
 mkdir /scratch/users/ladmon/test
 mkdir /scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}
 mkdir /scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/terminal_output
@@ -16,7 +17,7 @@ mkdir /scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/terminal_output
 #get probability number/range for probability sweep
 prob=$(python -c "print("$SLURM_ARRAY_TASK_ID"/100.0)")
 
-./cpp_version/simulate --fname "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}"  -n 2 --out --tmin 0.1 --tmax 2.1 -p prob --nt 20 -N 10
+./cpp_version/simulate --fname "/scratch/users/ladmon/${SLURM_ARRAY_JOB_ID}/${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}"  -n 2 --out --tmin 0.1 --tmax 2.1 -p $prob --nt 20 -N 10
 
 echo "----------------------------------"
 echo "id:" "$SLURM_ARRAY_JOB_ID" "$SLURM_ARRAY_TASK_ID"
