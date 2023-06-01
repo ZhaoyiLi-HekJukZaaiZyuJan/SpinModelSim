@@ -52,20 +52,12 @@ struct lattice {
 
         //apply random initialization of bonds
         void random_bonds(const double p, mt19937& rng) {
-            uniform_real_distribution<double> distribution(0.0, 1.0);
+            bernoulli_distribution dist(p);
 
             for (int i = 0; i < S[0]; i++) {
                 for (int j = 0; j < S[1]; j++) {
-                    if (distribution(rng) < 0.5) {
-                        bonds[0][i][j] = -1;
-                    } else {
-                        bonds[0][i][j] = 1;
-                    }
-                    if (distribution(rng) < 0.5) {
-                        bonds[1][i][j] = -1;
-                    } else {
-                        bonds[1][i][j] = 1;
-                    }
+                    bonds[0][i][j] = (dist(rng) == 1) ? -1 : 1;
+                    bonds[1][i][j] = (dist(rng) == 1) ? -1 : 1;
                 }
             }
         }
@@ -365,11 +357,7 @@ int main(int argc, const char *argv[]) {
         
         for (int j = 0; j <= nt; j++) {
             double t = tmin + (tmax-tmin)/binst * j;
-            if (p == 0){
-                simulate(S, t, J, waitSweep, rptSweep, out, track_state,  fname + ",Exp=" + to_string(exp) );
-            } else {
-                simulate(S, t, J, p, waitSweep, rptSweep, out, track_state,  fname + ",Exp=" + to_string(exp));
-            }
+            simulate(S, t, J, p, waitSweep, rptSweep, out, track_state,  fname + ",Exp=" + to_string(exp));
         }   
     }
 
@@ -378,4 +366,5 @@ int main(int argc, const char *argv[]) {
 }
 
 //simple testing commands
-//./simulate -n 20 --out --tmin 0.1./simulate -n 20 --out --tmin 0.1 --tmax 3.1 --nt 10
+//./simulate -n 2 --out --tmin 0.1 --tmax 3.1 --nt 10
+//./simulate -n 20  --out --tmin 0.1 --tmax 3.1 --nt 10
