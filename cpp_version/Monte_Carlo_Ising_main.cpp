@@ -56,8 +56,8 @@ struct lattice {
 
             for (int i = 0; i < S[0]; i++) {
                 for (int j = 0; j < S[1]; j++) {
-                    bonds[0][i][j] = (dist(rng) == 1) ? -1 : 1;
-                    bonds[1][i][j] = (dist(rng) == 1) ? -1 : 1;
+                    bonds[0][i][j] = (dist(rng) == 0) ? -1 : 1;
+                    bonds[1][i][j] = (dist(rng) == 0) ? -1 : 1;
                 }
             }
         }
