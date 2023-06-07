@@ -335,11 +335,11 @@ int main(int argc, const char *argv[]) {
     ("n", "size of lattice", cxxopts::value(n)->default_value("3"))
     ("tmin", "minimal temperature", cxxopts::value(tmin)->default_value("0.1"))
     ("tmax", "maximal temperature", cxxopts::value(tmax)->default_value("2.1"))
-    ("nt", "number of bins", cxxopts::value(nt)->default_value("10"));
+    ("nt", "number of tempsrature bins", cxxopts::value(nt)->default_value("10"));
     options.parse(argc, argv);
 
     //outputing options
-	cout << "tmin:" << tmin << "; tmax:" << tmax << endl;
+	cout << "tmin:" << tmin << "; nt:" << nt << "; tmax:" << tmax << endl;
 	cout << "n:" << n << "; p:" << p << endl;
     cout << "waitSweep:" << waitSweep << "; rptSweep:" << rptSweep << "; numExp:" << numExp << endl;
 
@@ -368,3 +368,4 @@ int main(int argc, const char *argv[]) {
 //simple testing commands
 //./simulate -n 2 --out --tmin 0.1 --tmax 3.1 --nt 30 --rptSweep 100000
 //./simulate -n 20  --out --tmin 0.1 --tmax 3.1 --nt 10
+//./simulate --out --tmin 0.1 --tmax 3.1 --nt 20 —-rptSweep 100000 -n 20 -N 100 -p 0.1 
