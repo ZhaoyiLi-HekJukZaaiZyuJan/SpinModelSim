@@ -366,5 +366,5 @@ int main(int argc, const char *argv[]) {
 }
 
 //simple testing commands
-//./simulate -n 2 --out --tmin 0.1 --tmax 3.1 --nt 30 --rptSweep 1000
+//./simulate -n 2 --out --tmin 0.1 --tmax 3.1 --nt 30 --rptSweep 100000
 //./simulate -n 20  --out --tmin 0.1 --tmax 3.1 --nt 10
